@@ -1,0 +1,1 @@
+This is a project I completed in my Computer Graphics course. The terrain is made by a math equation, and is different every time. The goal of the game is to move around the terrain and collect the water pieces and avoid the fire pieces. 
