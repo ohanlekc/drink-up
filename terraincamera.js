@@ -1,5 +1,5 @@
-import { Camera } from './camera';
-import { Terrain } from './terrain';
+import { Camera } from './camera.js';
+import { Terrain } from './terrain.js';
 export class TerrainCamera extends Camera {
     constructor(position, lookAt, worldUp, terrain, eyeLevel) {
         super(position, lookAt, worldUp);

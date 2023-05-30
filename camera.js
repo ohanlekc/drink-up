@@ -1,6 +1,6 @@
-import {Matrix4} from './matrix';
-import { Vector3 } from './vector';
-import { Vector4 } from './vector'; 
+import {Matrix4} from './matrix.js';
+import { Vector3 } from './vector.js';
+import { Vector4 } from './vector.js'; 
 
 
 export class Camera {

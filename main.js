@@ -1,10 +1,10 @@
-import { VertexAttributes } from './vertex-attributes';
-import { ShaderProgram } from './shader-program';
-import { VertexArray } from './vertex-array';
-import { Matrix4 } from './matrix';
-import { Vector3, Vector4 } from './vector';
-import { TerrainCamera } from './terraincamera';
-import { Terrain } from './terrain';
+import { VertexAttributes } from './vertex-attributes.js';
+import { ShaderProgram } from './shader-program.js';
+import { VertexArray } from './vertex-array.js';
+import { Matrix4 } from './matrix.js';
+import { Vector3, Vector4 } from './vector.js';
+import { TerrainCamera } from './terraincamera.js';
+import { Terrain } from './terrain.js';
 
 let canvas;
 

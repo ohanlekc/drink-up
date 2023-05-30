@@ -1,5 +1,5 @@
 
-import {Trimesh} from './trimesh';
+import {Trimesh} from './trimesh.js';
 
 export class Terrain {
 
