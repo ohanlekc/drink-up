@@ -1,21 +1,21 @@
-import {Vector4} from "./vector.js";
-import {Vector3} from "./vector.js";
+import { Vector4 } from "./vector.js";
+import { Vector3 } from "./vector.js";
 
 export class Matrix4 {
 
     constructor() {
         this.mem = new Float32Array(16);  // [0, 4, 8,  12,
-        for (let i; i <16; i++) {
+        for (let i; i < 16; i++) {
             this.mem[i] = 0;
         }                                //  1, 5, 9,  13,
-                                         //  2, 6, 10, 14,
-                                         //  3, 7, 11, 15,]
+        //  2, 6, 10, 14,
+        //  3, 7, 11, 15,]
     }
 
     get(row, column) {
         return this.mem[(column * 4) + row];
     }
-    
+
     set(row, column, value) {
         this.mem[(column * 4) + row] = value;
     }
@@ -36,8 +36,8 @@ export class Matrix4 {
         iden.mem[6] = 0;
         iden.mem[7] = 0;
 
-        iden.mem[8]  = 0;
-        iden.mem[9]  = 0;
+        iden.mem[8] = 0;
+        iden.mem[9] = 0;
         iden.mem[10] = 1;
         iden.mem[11] = 0;
 
@@ -76,23 +76,23 @@ export class Matrix4 {
     static rotateX(degrees) {
         var rotX = new Matrix4();
         //rotX.identity();
-        rotX.set( 0, 0, 1);
-        rotX.set( 1, 1, Math.cos(degrees*Math.PI/180));
-        rotX.set( 1, 2, -Math.sin(degrees*Math.PI/180));
-        rotX.set( 2, 1, Math.sin(degrees*Math.PI/180));
-        rotX.set( 2, 2, Math.cos(degrees*Math.PI/180));
-        rotX.set( 3, 3, 1);
-        
+        rotX.set(0, 0, 1);
+        rotX.set(1, 1, Math.cos(degrees * Math.PI / 180));
+        rotX.set(1, 2, -Math.sin(degrees * Math.PI / 180));
+        rotX.set(2, 1, Math.sin(degrees * Math.PI / 180));
+        rotX.set(2, 2, Math.cos(degrees * Math.PI / 180));
+        rotX.set(3, 3, 1);
+
         return rotX;
     }
-    
+
     static rotateY(degrees) {
         let rY = new Matrix4();
         //.identity();
-        rY.set(0, 0, Math.cos(degrees*Math.PI/180));
-        rY.set(2, 0, Math.sin(degrees*Math.PI/180));
-        rY.set(0, 2, -Math.sin(degrees*Math.PI/180));
-        rY.set(2, 2, Math.cos(degrees*Math.PI/180));
+        rY.set(0, 0, Math.cos(degrees * Math.PI / 180));
+        rY.set(2, 0, Math.sin(degrees * Math.PI / 180));
+        rY.set(0, 2, -Math.sin(degrees * Math.PI / 180));
+        rY.set(2, 2, Math.cos(degrees * Math.PI / 180));
         rY.set(1, 1, 1);
         rY.set(3, 3, 1);
         return rY;
@@ -112,13 +112,13 @@ export class Matrix4 {
     }
 
     static fovPerspective(vDegrees, aspRatio, near, far) {
-        let top = Math.tan(vDegrees/2) * near;
+        let top = Math.tan(vDegrees / 2) * near;
         let right = aspRatio * top;
         let fov = new Matrix4();
-        fov.set(0, 0, near/right);
-        fov.set(1,1, near / top);
+        fov.set(0, 0, near / right);
+        fov.set(1, 1, near / top);
         fov.set(2, 2, (near + far) / (near - far));
-        fov.set(2, 3, (2*near*far) / (near - far));
+        fov.set(2, 3, (2 * near * far) / (near - far));
         fov.set(3, 2, -1);
         return fov;
     }
@@ -136,13 +136,13 @@ export class Matrix4 {
     }
 
     multiplyVector(vec4) {
-        var val1 = vec4.x * this.get(0,0) + vec4.y * this.get(0,1) + vec4.z * this.get(0,2) + vec4.w * this.get(0,3);
-        var val2 = vec4.x * this.get(1,0) + vec4.y * this.get(1,1) + vec4.z * this.get(1,2) + vec4.w * this.get(1,3);
-        var val3 = vec4.x * this.get(2,0) + vec4.y * this.get(2,1) + vec4.z * this.get(2,2) + vec4.w * this.get(2,3);
-        var val4 = vec4.x * this.get(3,0) + vec4.y * this.get(3,1) + vec4.z * this.get(3,2) + vec4.w * this.get(3,3);
-        
+        var val1 = vec4.x * this.get(0, 0) + vec4.y * this.get(0, 1) + vec4.z * this.get(0, 2) + vec4.w * this.get(0, 3);
+        var val2 = vec4.x * this.get(1, 0) + vec4.y * this.get(1, 1) + vec4.z * this.get(1, 2) + vec4.w * this.get(1, 3);
+        var val3 = vec4.x * this.get(2, 0) + vec4.y * this.get(2, 1) + vec4.z * this.get(2, 2) + vec4.w * this.get(2, 3);
+        var val4 = vec4.x * this.get(3, 0) + vec4.y * this.get(3, 1) + vec4.z * this.get(3, 2) + vec4.w * this.get(3, 3);
+
         //var iden = new Vector4();
-        return new Vector4(val1,val2,val3,val4);
+        return new Vector4(val1, val2, val3, val4);
 
     }
 
@@ -150,46 +150,46 @@ export class Matrix4 {
 
     multiplyMatrix(mat4) {
         var multMat = new Matrix4();
-        var val1 = this.get(0,0) * mat4.get(0, 0) + this.get(0,1) * mat4.get(1,0) + this.get(0,2) * mat4.get(2,0) + this.get(0,3) * mat4.get(3,0);
-        var val2 = this.get(0,0) * mat4.get(0, 1) + this.get(0,1) * mat4.get(1,1) + this.get(0,2) * mat4.get(2,1) + this.get(0,3) * mat4.get(3,1);
-        var val3 = this.get(0,0) * mat4.get(0, 2) + this.get(0,1) * mat4.get(1,2) + this.get(0,2) * mat4.get(2,2) + this.get(0,3) * mat4.get(3,2);
-        var val4 = this.get(0,0) * mat4.get(0, 3) + this.get(0,1) * mat4.get(1,3) + this.get(0,2) * mat4.get(2,3) + this.get(0,3) * mat4.get(3,3);
+        var val1 = this.get(0, 0) * mat4.get(0, 0) + this.get(0, 1) * mat4.get(1, 0) + this.get(0, 2) * mat4.get(2, 0) + this.get(0, 3) * mat4.get(3, 0);
+        var val2 = this.get(0, 0) * mat4.get(0, 1) + this.get(0, 1) * mat4.get(1, 1) + this.get(0, 2) * mat4.get(2, 1) + this.get(0, 3) * mat4.get(3, 1);
+        var val3 = this.get(0, 0) * mat4.get(0, 2) + this.get(0, 1) * mat4.get(1, 2) + this.get(0, 2) * mat4.get(2, 2) + this.get(0, 3) * mat4.get(3, 2);
+        var val4 = this.get(0, 0) * mat4.get(0, 3) + this.get(0, 1) * mat4.get(1, 3) + this.get(0, 2) * mat4.get(2, 3) + this.get(0, 3) * mat4.get(3, 3);
 
-        var val5 = this.get(1,0) * mat4.get(0, 0) + this.get(1,1) * mat4.get(1,0) + this.get(1,2) * mat4.get(2,0) + this.get(1,3) * mat4.get(3,0);
-        var val6 = this.get(1,0) * mat4.get(0, 1) + this.get(1,1) * mat4.get(1,1) + this.get(1,2) * mat4.get(2,1) + this.get(1,3) * mat4.get(3,1);
-        var val7 = this.get(1,0) * mat4.get(0, 2) + this.get(1,1) * mat4.get(1,2) + this.get(1,2) * mat4.get(2,2) + this.get(1,3) * mat4.get(3,2);
-        var val8 = this.get(1,0) * mat4.get(0, 3) + this.get(1,1) * mat4.get(1,3) + this.get(1,2) * mat4.get(2,3) + this.get(1,3) * mat4.get(3,3);
+        var val5 = this.get(1, 0) * mat4.get(0, 0) + this.get(1, 1) * mat4.get(1, 0) + this.get(1, 2) * mat4.get(2, 0) + this.get(1, 3) * mat4.get(3, 0);
+        var val6 = this.get(1, 0) * mat4.get(0, 1) + this.get(1, 1) * mat4.get(1, 1) + this.get(1, 2) * mat4.get(2, 1) + this.get(1, 3) * mat4.get(3, 1);
+        var val7 = this.get(1, 0) * mat4.get(0, 2) + this.get(1, 1) * mat4.get(1, 2) + this.get(1, 2) * mat4.get(2, 2) + this.get(1, 3) * mat4.get(3, 2);
+        var val8 = this.get(1, 0) * mat4.get(0, 3) + this.get(1, 1) * mat4.get(1, 3) + this.get(1, 2) * mat4.get(2, 3) + this.get(1, 3) * mat4.get(3, 3);
 
-        var val9 = this.get(2,0) * mat4.get(0, 0) + this.get(2,1) * mat4.get(1,0) + this.get(2,2) * mat4.get(2,0) + this.get(2,3) * mat4.get(3,0);
-        var val10 = this.get(2,0) * mat4.get(0, 1) + this.get(2,1) * mat4.get(1,1) + this.get(2,2) * mat4.get(2,1) + this.get(2,3) * mat4.get(3,1);
-        var val11 = this.get(2,0) * mat4.get(0, 2) + this.get(2,1) * mat4.get(1,2) + this.get(2,2) * mat4.get(2,2) + this.get(2,3) * mat4.get(3,2);
-        var val12 = this.get(2,0) * mat4.get(0, 3) + this.get(2,1) * mat4.get(1,3) + this.get(2,2) * mat4.get(2,3) + this.get(2,3) * mat4.get(3,3);
-        
-        var val13 = this.get(3,0) * mat4.get(0, 0) + this.get(3,1) * mat4.get(1,0) + this.get(3,2) * mat4.get(2,0) + this.get(3,3) * mat4.get(3,0);
-        var val14 = this.get(3,0) * mat4.get(0, 1) + this.get(3,1) * mat4.get(1,1) + this.get(3,2) * mat4.get(2,1) + this.get(3,3) * mat4.get(3,1);
-        var val15 = this.get(3,0) * mat4.get(0, 2) + this.get(3,1) * mat4.get(1,2) + this.get(3,2) * mat4.get(2,2) + this.get(3,3) * mat4.get(3,2);
-        var val16 = this.get(3,0) * mat4.get(0, 3) + this.get(3,1) * mat4.get(1,3) + this.get(3,2) * mat4.get(2,3) + this.get(3,3) * mat4.get(3,3);
+        var val9 = this.get(2, 0) * mat4.get(0, 0) + this.get(2, 1) * mat4.get(1, 0) + this.get(2, 2) * mat4.get(2, 0) + this.get(2, 3) * mat4.get(3, 0);
+        var val10 = this.get(2, 0) * mat4.get(0, 1) + this.get(2, 1) * mat4.get(1, 1) + this.get(2, 2) * mat4.get(2, 1) + this.get(2, 3) * mat4.get(3, 1);
+        var val11 = this.get(2, 0) * mat4.get(0, 2) + this.get(2, 1) * mat4.get(1, 2) + this.get(2, 2) * mat4.get(2, 2) + this.get(2, 3) * mat4.get(3, 2);
+        var val12 = this.get(2, 0) * mat4.get(0, 3) + this.get(2, 1) * mat4.get(1, 3) + this.get(2, 2) * mat4.get(2, 3) + this.get(2, 3) * mat4.get(3, 3);
+
+        var val13 = this.get(3, 0) * mat4.get(0, 0) + this.get(3, 1) * mat4.get(1, 0) + this.get(3, 2) * mat4.get(2, 0) + this.get(3, 3) * mat4.get(3, 0);
+        var val14 = this.get(3, 0) * mat4.get(0, 1) + this.get(3, 1) * mat4.get(1, 1) + this.get(3, 2) * mat4.get(2, 1) + this.get(3, 3) * mat4.get(3, 1);
+        var val15 = this.get(3, 0) * mat4.get(0, 2) + this.get(3, 1) * mat4.get(1, 2) + this.get(3, 2) * mat4.get(2, 2) + this.get(3, 3) * mat4.get(3, 2);
+        var val16 = this.get(3, 0) * mat4.get(0, 3) + this.get(3, 1) * mat4.get(1, 3) + this.get(3, 2) * mat4.get(2, 3) + this.get(3, 3) * mat4.get(3, 3);
 
 
-        
-        multMat.set(0,0, val1);
-        multMat.set(0,1, val2);
-        multMat.set(0,2, val3);
-        multMat.set(0,3, val4);
-        multMat.set(1,0, val5);
-        multMat.set(1,1, val6);
-        multMat.set(1,2, val7);
-        multMat.set(1,3, val8);
-        multMat.set(2,0, val9);
-        multMat.set(2,1, val10);
-        multMat.set(2,2, val11);
-        multMat.set(2,3, val12);
-        multMat.set(3,0, val13);
-        multMat.set(3,1, val14);
-        multMat.set(3,2, val15);
-        multMat.set(3,3, val16);
-       
-        return  multMat;
+
+        multMat.set(0, 0, val1);
+        multMat.set(0, 1, val2);
+        multMat.set(0, 2, val3);
+        multMat.set(0, 3, val4);
+        multMat.set(1, 0, val5);
+        multMat.set(1, 1, val6);
+        multMat.set(1, 2, val7);
+        multMat.set(1, 3, val8);
+        multMat.set(2, 0, val9);
+        multMat.set(2, 1, val10);
+        multMat.set(2, 2, val11);
+        multMat.set(2, 3, val12);
+        multMat.set(3, 0, val13);
+        multMat.set(3, 1, val14);
+        multMat.set(3, 2, val15);
+        multMat.set(3, 3, val16);
+
+        return multMat;
     }
 
     static rotateAroundAxis(a, v) {
@@ -202,13 +202,13 @@ export class Matrix4 {
         r.set(2, 0, (d * v.z * v.x) - (s * v.y));
         r.set(3, 0, 0);
 
-        r.set(0, 1, (d * v.x * v.y) - (s*v.z));
+        r.set(0, 1, (d * v.x * v.y) - (s * v.z));
         r.set(1, 1, (d * v.y * v.y) + c);
-        r.set(2, 1, (d * v.z * v.y) + (s*v.x));
+        r.set(2, 1, (d * v.z * v.y) + (s * v.x));
         r.set(3, 1, 0);
-        
-        r.set(0, 2, (d * v.x * v.z) + (s*v.y));
-        r.set(1, 2, (d * v.y * v.z) - (s*v.x));
+
+        r.set(0, 2, (d * v.x * v.z) + (s * v.y));
+        r.set(1, 2, (d * v.y * v.z) - (s * v.x));
         r.set(2, 2, (d * v.z * v.z) + c);
         r.set(3, 2, 0);
 
@@ -217,7 +217,7 @@ export class Matrix4 {
         r.set(2, 3, 0);
         r.set(3, 3, 1);
         return r;
-      }
-    
-    
+    }
+
+
 }

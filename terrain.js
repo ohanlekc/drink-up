@@ -1,5 +1,4 @@
-
-import {Trimesh} from './trimesh.js';
+import { Trimesh } from './trimesh.js';
 
 export class Terrain {
 
@@ -11,25 +10,22 @@ export class Terrain {
     }
 
     // height getter
-    get(x, z)
-    {
+    get(x, z) {
         return this.elevations[z * this.width + x];
     }
 
     // height setter
-    set(x, z, elevation)
-    {
+    set(x, z, elevation) {
         this.elevations[z * this.width + x] = elevation;
     }
 
     // to tri mesh
-    toTrimesh()
-    {
+    toTrimesh() {
         let positions = [];
 
-        for (let z = 0; z < this.depth; z ++) //z in 0..depth
+        for (let z = 0; z < this.depth; z++) //z in 0..depth
         {
-            for (let x = 0; x < this.width; x ++)//in 0..width
+            for (let x = 0; x < this.width; x++)//in 0..width
             {
                 let y = this.get(x, z);
                 positions.push(x, y, z);
@@ -38,10 +34,10 @@ export class Terrain {
 
         let faces = [];
 
-        for (let z = 0; z < this.depth - 1; z ++) // to depth - 1
+        for (let z = 0; z < this.depth - 1; z++) // to depth - 1
         {
             let nextZ = z + 1;
-            for (let x = 0; x < this.width - 1; x ++) // to width - 1
+            for (let x = 0; x < this.width - 1; x++) // to width - 1
             {
                 let nextX = x + 1;
                 faces.push([
@@ -56,8 +52,8 @@ export class Terrain {
                 ]);
             }
         }
-        console.log("pos", positions );
-        console.log("face", faces );
+        console.log("pos", positions);
+        console.log("face", faces);
 
         return new Trimesh(positions, faces);
     }
@@ -65,10 +61,10 @@ export class Terrain {
     blerp(x, z) {
         var floorX = Math.floor(x);
         var floorZ = Math.floor(z);
-    
+
         var fractionX = x - floorX;
         var fractionZ = z - floorZ;
-  
+
         var nearLeft = this.get(floorX, floorZ);
         var nearRight = this.get(floorX + 1, floorZ);
         var nearMix = this.lerp(fractionX, nearLeft, nearRight);

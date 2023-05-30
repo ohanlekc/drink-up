@@ -45,9 +45,9 @@ export class Trimesh {
             //let triangle = new Vecr3(positions[indices[i][0]], positions[indices[i][1]], positions[indices[i][2]]);
             //console.log("triangle", triangle);
 
-            let positionA = new Vector3(positions[indices[i][0] * 3], positions[indices[i][0]* 3 + 1], positions[indices[i][0]*3 + 2]);
-            let positionB = new Vector3(positions[indices[i][1] * 3], positions[indices[i][1]* 3 + 1], positions[indices[i][1]*3 + 2]);
-            let positionC = new Vector3(positions[indices[i][2] * 3], positions[indices[i][2] * 3 + 1], positions[indices[i][2]* 3 + 2]);
+            let positionA = new Vector3(positions[indices[i][0] * 3], positions[indices[i][0] * 3 + 1], positions[indices[i][0] * 3 + 2]);
+            let positionB = new Vector3(positions[indices[i][1] * 3], positions[indices[i][1] * 3 + 1], positions[indices[i][1] * 3 + 2]);
+            let positionC = new Vector3(positions[indices[i][2] * 3], positions[indices[i][2] * 3 + 1], positions[indices[i][2] * 3 + 2]);
             //console.log("Positon A, B, C", positionA, positionB, positionC);
             // Find two edge vectors
             let vectorAB = positionB.subtract(positionA);
@@ -63,18 +63,18 @@ export class Trimesh {
 
             // For each vertex in triangle, add faceNormal to vertexNormal
             // console.log("faceNormal", faceNormal);
-            
-            
+
+
             vertexNormal[indices[i][0]] = vertexNormal[indices[i][0]].add(faceNormal);
             vertexNormal[indices[i][1]] = vertexNormal[indices[i][1]].add(faceNormal);
             vertexNormal[indices[i][2]] = vertexNormal[indices[i][2]].add(faceNormal);
 
             //console.log("VN",vertexNormal[i]);
         }
-        
+
         //Average added face normals
         vertexNormal.forEach(normal => {
-           normal = normal.normalize();
+            normal = normal.normalize();
         });
 
         return vertexNormal;

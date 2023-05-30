@@ -3,7 +3,7 @@ export class Vector4 {
     this.coordinates = [x, y, z, w];
   }
 
-  
+
   get x() {
     return this.coordinates[0];
   }

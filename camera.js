@@ -1,6 +1,6 @@
-import {Matrix4} from './matrix.js';
+import { Matrix4 } from './matrix.js';
 import { Vector3 } from './vector.js';
-import { Vector4 } from './vector.js'; 
+import { Vector4 } from './vector.js';
 
 
 export class Camera {
@@ -25,12 +25,12 @@ export class Camera {
 
         rotator.set(1, 0, this.up.x);
         rotator.set(1, 1, this.up.y);
-        rotator.set(1,  2, this.up.z);
+        rotator.set(1, 2, this.up.z);
 
         rotator.set(2, 0, -this.forward.x);
         rotator.set(2, 1, -this.forward.y);
         rotator.set(2, 2, -this.forward.z);
-    
+
         let translater = Matrix4.translate(-this.position.x, -this.position.y, -this.position.z);
         this.eyeFromWorld = rotator.multiplyMatrix(translater);
     }
@@ -39,8 +39,8 @@ export class Camera {
         this.reorient();
     }
     advance(distance) {
-      this.position = this.position.add(this.forward.scalarMult(distance));
-      this.reorient();
+        this.position = this.position.add(this.forward.scalarMult(distance));
+        this.reorient();
     }
     yaw(degrees) {
         let forVec = new Vector4(this.forward.x, this.forward.y, this.forward.z, 1);
@@ -51,7 +51,7 @@ export class Camera {
     pitch(degrees) {
         let forVec = new Vector4(this.forward.x, this.forward.y, this.forward.z, 1);
         let temp = Matrix4.rotateAroundAxis(degrees, this.right).multiplyVector(forVec);
-        this.forward = new Vector3(temp.x,temp.y ,temp.z);
+        this.forward = new Vector3(temp.x, temp.y, temp.z);
         this.reorient();
     }
 

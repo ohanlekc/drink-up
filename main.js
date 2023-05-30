@@ -156,48 +156,46 @@ function onKeyDown(event) {
   }
 
   // Checking how close the camera is to water
-  for (let i = 0; i < waterPositions.length; i+=12) {
-    let position = new Vector3(waterPositions[i], waterPositions[i+1], waterPositions[i+2]);
+  for (let i = 0; i < waterPositions.length; i += 12) {
+    let position = new Vector3(waterPositions[i], waterPositions[i + 1], waterPositions[i + 2]);
     let XPos = Math.abs(terrainCam.position.x - position.x);
     let YPos = Math.abs(terrainCam.position.z - position.z);
 
     // We have collected the water and need to delete it from the scene.
-    if (XPos < 1 && YPos < 1)
-    {
+    if (XPos < 1 && YPos < 1) {
       playSound("watersound.wav");
       waterPositions[i] = 0;
-      waterPositions[i+1] = 0;
-      waterPositions[i+2] = 0;
-      waterPositions[i+3] = 0;
-      waterPositions[i+4] = 0;
-      waterPositions[i+5] = 0;
-      waterPositions[i+6] = 0;
-      waterPositions[i+7] = 0;
-      waterPositions[i+8] = 0;
-      waterPositions[i+9] = 0;
-      waterPositions[i+10] = 0;
-      waterPositions[i+11] = 0;
-      waterPositions[i+12] = 0;
+      waterPositions[i + 1] = 0;
+      waterPositions[i + 2] = 0;
+      waterPositions[i + 3] = 0;
+      waterPositions[i + 4] = 0;
+      waterPositions[i + 5] = 0;
+      waterPositions[i + 6] = 0;
+      waterPositions[i + 7] = 0;
+      waterPositions[i + 8] = 0;
+      waterPositions[i + 9] = 0;
+      waterPositions[i + 10] = 0;
+      waterPositions[i + 11] = 0;
+      waterPositions[i + 12] = 0;
 
-      waterAttributes.addAttribute('position', waterPositions.length/3, 3, waterPositions);
-      waterAttributes.addAttribute('texPosition', waterTexPositions.length/2, 2, waterTexPositions);
+      waterAttributes.addAttribute('position', waterPositions.length / 3, 3, waterPositions);
+      waterAttributes.addAttribute('texPosition', waterTexPositions.length / 2, 2, waterTexPositions);
       waterAttributes.addIndices(waterIndices);
       updateWater(waterAttributes);
 
     }
   }
-    // Checking how close the camera is to fire
-    for (let i = 0; i < firePositions.length; i+=12) {
-      let position = new Vector3(firePositions[i], firePositions[i+1], firePositions[i+2]);
-      let XPos = Math.abs(terrainCam.position.x - position.x);
-      let YPos = Math.abs(terrainCam.position.z - position.z);
-  
-      // We have collected the water and need to delete it from the scene.
-      if (XPos < 1 && YPos < 1)
-      {
-        playSound("firesound.wav");
-      }
+  // Checking how close the camera is to fire
+  for (let i = 0; i < firePositions.length; i += 12) {
+    let position = new Vector3(firePositions[i], firePositions[i + 1], firePositions[i + 2]);
+    let XPos = Math.abs(terrainCam.position.x - position.x);
+    let YPos = Math.abs(terrainCam.position.z - position.z);
+
+    // We have collected the water and need to delete it from the scene.
+    if (XPos < 1 && YPos < 1) {
+      playSound("firesound.wav");
     }
+  }
   render();
 }
 
@@ -226,15 +224,15 @@ function generateElements(positions, texPositions, indices) {
   }
 
   let newAttributes = new VertexAttributes();
-  newAttributes.addAttribute('position', positions.length/3, 3, positions);
-  newAttributes.addAttribute('texPosition', texPositions.length/2, 2, texPositions);
+  newAttributes.addAttribute('position', positions.length / 3, 3, positions);
+  newAttributes.addAttribute('texPosition', texPositions.length / 2, 2, texPositions);
   newAttributes.addIndices(indices);
   return newAttributes;
 }
 
 // Redraw the water elements to delete the one we just collected.
 function updateWater(attributes) {
-  
+
   const eleVertexSource = `
   uniform mat4 clipFromEye;
   uniform mat4 eyeFromWorld;
@@ -293,32 +291,32 @@ async function initialize() {
   greyScale = imageToGrayscale(texImg);
 
   const fireImg = await readImage('fire.png');
-  createTexture2d(fireImg,gl.TEXTURE0);
+  createTexture2d(fireImg, gl.TEXTURE0);
 
   const waterImg = await readImage('water.png');
-  createTexture2d(waterImg,gl.TEXTURE1);
+  createTexture2d(waterImg, gl.TEXTURE1);
 
   terrain = new Terrain(greyScale, texImg.height, texImg.width);
   tri = terrain.toTrimesh();
-  position = new Vector3(texImg.width / 2, texImg.height/2, 250);
+  position = new Vector3(texImg.width / 2, texImg.height / 2, 250);
   terrainCam = new TerrainCamera(position, lookAt, worldUp, terrain, 1.0);
 
   gl.enable(gl.DEPTH_TEST);
 
   let tmpnormals = tri.generateNormals(tri.positions, tri.indices);
 
-  for(let i = 0; i < tmpnormals.length; i++) {
+  for (let i = 0; i < tmpnormals.length; i++) {
     normals.push(tmpnormals[i].x);
     normals.push(tmpnormals[i].y);
     normals.push(tmpnormals[i].z);
   }
 
-  fireAttributes = generateElements(firePositions, fireTexPositions, fireIndices);  
-  waterAttributes = generateElements(waterPositions, waterTexPositions, waterIndices);  
+  fireAttributes = generateElements(firePositions, fireTexPositions, fireIndices);
+  waterAttributes = generateElements(waterPositions, waterTexPositions, waterIndices);
 
   attributes = new VertexAttributes();
-  attributes.addAttribute('position', tri.positions.length/3, 3, tri.positions);
-  attributes.addAttribute('normal', tri.positions.length/3, 3, normals);
+  attributes.addAttribute('position', tri.positions.length / 3, 3, tri.positions);
+  attributes.addAttribute('normal', tri.positions.length / 3, 3, normals);
   attributes.addIndices(tri.indices.flat());
 
   const vertexSource = `
