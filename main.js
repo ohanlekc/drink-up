@@ -120,7 +120,7 @@ function imageToGrayscale(image) {
 
   const grays = new Array(image.width * image.height);
   for (let i = 0; i < image.width * image.height; ++i) {
-    grays[i] = pixels.data[i * 4] * .1;
+    grays[i] = pixels.data[i * 4] * .3;
   }
   return grays;
 }
@@ -162,7 +162,7 @@ function onKeyDown(event) {
     let YPos = Math.abs(terrainCam.position.z - position.z);
 
     // We have collected the water and need to delete it from the scene.
-    if (XPos < 1 && YPos < 1) {
+    if (XPos < 2 && YPos < 2) {
       playSound("watersound.wav");
       waterPositions[i] = 0;
       waterPositions[i + 1] = 0;
@@ -192,7 +192,7 @@ function onKeyDown(event) {
     let YPos = Math.abs(terrainCam.position.z - position.z);
 
     // We have collected the water and need to delete it from the scene.
-    if (XPos < 1 && YPos < 1) {
+    if (XPos < 2 && YPos < 2) {
       playSound("firesound.wav");
     }
   }
