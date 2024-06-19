@@ -8,6 +8,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@bladeski/countdown-timer": "^2.3.2",
     "jest": "^27.4.7",
     "vite": "^2.7.10"
   }
