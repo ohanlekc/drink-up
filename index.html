@@ -6,10 +6,18 @@
   <link rel="icon" href="data:,">
   <link rel="stylesheet" href="style.css">
   <script type="module" src="./main.js"></script>
+  <script src="node_modules/coundowntimer-js/src/countdown.js"></script>
+
 </head>
 
 <body>
-  <canvas id="canvas"></canvas>
+  <div id="countdown"></div>
+
+  <canvas id="canvas">
+    <script>
+      Countdown.init('2024-12-31', 'countdown');
+    </script>
+  </canvas>
 </body>
 
 </html>

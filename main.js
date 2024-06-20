@@ -285,6 +285,7 @@ function playSound(sound) {
 
 async function initialize() {
   canvas = document.getElementById('canvas');
+
   window.gl = canvas.getContext('webgl2');
 
   const texImg = await readImage('noise-terrain.png');
