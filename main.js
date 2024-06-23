@@ -419,9 +419,7 @@ async function initialize() {
     }
   });
 
-  console.log("testing...")
   const thirtySecondsFromNow = DateTime.now().plus({ second: 30 }).toSQL()
-  console.log("🚀 ~ initTimer ~ thirtySecondsFromNow:", thirtySecondsFromNow)
   Countdown.init(thirtySecondsFromNow, 'countdown')
 
   onResizeWindow();
