@@ -8,6 +8,9 @@ import { Terrain } from './terrain.js';
 import { DateTime } from './node_modules/luxon/src/luxon.js'
 
 let canvas;
+let pointDisplay;
+
+let points = 0;
 
 let attributes;
 let fireAttributes;
@@ -47,7 +50,7 @@ let normals = [];
 
 function render() {
   gl.viewport(0, 0, canvas.width, canvas.height);
-  gl.clearColor(0.2, 0.4, 0.9, 1);
+  gl.clearColor(0.1, 0.4, 0.9, 1);
   gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
   // Terrain
@@ -164,6 +167,7 @@ function onKeyDown(event) {
 
     // We have collected the water and need to delete it from the scene.
     if (XPos < 2 && YPos < 2) {
+      points += 1;
       playSound("watersound.wav");
       waterPositions[i] = 0;
       waterPositions[i + 1] = 0;
@@ -194,6 +198,7 @@ function onKeyDown(event) {
 
     // We have collected the water and need to delete it from the scene.
     if (XPos < 2 && YPos < 2) {
+      points -= 1;
       playSound("firesound.wav");
     }
   }
@@ -287,6 +292,8 @@ function playSound(sound) {
 async function initialize() {
   console.log("initializing...")
   canvas = document.getElementById('canvas');
+  pointDisplay = document.getElementById('points')
+  pointDisplay.innerText += `${points}`
 
   window.gl = canvas.getContext('webgl2');
 
@@ -424,13 +431,6 @@ async function initialize() {
 
   onResizeWindow();
   animateFrame();
-}
-
-export function initTimer() {
-  console.log("testing...")
-  const thirtySecondsFromNow = DateTime.now().plus({ second: 30 })
-  console.log("🚀 ~ initTimer ~ thirtySecondsFromNow:", thirtySecondsFromNow)
-  return '12-31-24';
 }
 
 window.addEventListener('load', initialize);
