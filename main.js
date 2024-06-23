@@ -5,6 +5,7 @@ import { Matrix4 } from './matrix.js';
 import { Vector3, Vector4 } from './vector.js';
 import { TerrainCamera } from './terraincamera.js';
 import { Terrain } from './terrain.js';
+import { DateTime } from './node_modules/luxon/src/luxon.js'
 
 let canvas;
 
@@ -284,6 +285,7 @@ function playSound(sound) {
 // }
 
 async function initialize() {
+  console.log("initializing...")
   canvas = document.getElementById('canvas');
 
   window.gl = canvas.getContext('webgl2');
@@ -417,8 +419,20 @@ async function initialize() {
     }
   });
 
+  console.log("testing...")
+  const thirtySecondsFromNow = DateTime.now().plus({ second: 30 }).toSQL()
+  console.log("🚀 ~ initTimer ~ thirtySecondsFromNow:", thirtySecondsFromNow)
+  Countdown.init(thirtySecondsFromNow, 'countdown')
+
   onResizeWindow();
   animateFrame();
+}
+
+export function initTimer() {
+  console.log("testing...")
+  const thirtySecondsFromNow = DateTime.now().plus({ second: 30 })
+  console.log("🚀 ~ initTimer ~ thirtySecondsFromNow:", thirtySecondsFromNow)
+  return '12-31-24';
 }
 
 window.addEventListener('load', initialize);
